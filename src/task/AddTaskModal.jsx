@@ -1,6 +1,7 @@
 import { useState } from 'react'
-export default function AddTaskModal({onSave}) {
-  const [task, setTasks] = useState({
+export default function AddTaskModal({onSave, taskToEdit}) {
+  const [task, setTasks] = useState(taskToEdit ||{
+    id: crypto.randomUUID(),
     title: '',
     description: '',
     tags: [],
@@ -15,6 +16,9 @@ export default function AddTaskModal({onSave}) {
     }
     setTasks({ ...task, [name]: value })
   }
+
+  const [isAdd, setIsAdd] = useState(Object.is(taskToEdit, null))
+  
 
   return (
     <>
@@ -76,9 +80,9 @@ export default function AddTaskModal({onSave}) {
                 required
               >
                 <option value="">Select Priority</option>
-                <option value="low">Low</option>
-                <option value="medium">Medium</option>
-                <option value="high">High</option>
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
               </select>
             </div>
           </div>
@@ -90,10 +94,10 @@ export default function AddTaskModal({onSave}) {
             className="px-4 py-2 text-white transition-all bg-blue-600 rounded hover:opacity-80"
             onClick={(e) => {
               e.preventDefault()
-              onSave(task)
+              onSave(task, isAdd)
             }}
           >
-            Create new Task
+            {isAdd ? 'Add Task' : 'Update Task'}
           </button>
         </div>
       </form>

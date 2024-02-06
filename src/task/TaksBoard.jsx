@@ -16,14 +16,27 @@ export default function TaksBoard() {
   }
   const [tasks, setTasks] = useState([defaultTask])
   const [showAddModal, setAddModal] = useState(false)
-  const handleAddTask = (task) => {
-    setTasks([...tasks, task])
-    setAddModal(false)
+  const [taskToEdit, setTaskToEdit] = useState(null)
+  const handleAddTask = (newtask, isAdd) => {
+    if (isAdd) {
+      setTasks([...tasks, newtask])
+      setAddModal(false)
+    }else{
+      setTasks(tasks.map((task) => (task.id === newtask.id ? newtask : task)))
+      setAddModal(false)
+    }
+  }
+
+  const handleEditTask = (task) => {
+    setTaskToEdit(task)
+    setAddModal(true)
   }
 
   return (
     <section className="mb-20" id="tasks">
-      {showAddModal && <AddTaskModal onSave ={handleAddTask} />}
+      {showAddModal && (
+        <AddTaskModal onSave={handleAddTask} taskToEdit={taskToEdit} />
+      )}
       <div className="container">
         <div className="flex justify-end p-2">
           <SearchBox />
@@ -35,7 +48,7 @@ export default function TaksBoard() {
               setAddModal(true)
             }}
           />
-          <TaskLists tasks={tasks} />
+          <TaskLists tasks={tasks} onEdit={handleEditTask} />
         </div>
       </div>
     </section>
