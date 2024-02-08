@@ -17,14 +17,13 @@ export default function TaksBoard() {
   const [tasks, setTasks] = useState([defaultTask])
   const [showAddModal, setAddModal] = useState(false)
   const [taskToEdit, setTaskToEdit] = useState(null)
-  const handleAddTask = (newtask, isAdd) => {
+  const handleAddEditTask = (newtask, isAdd) => {
     if (isAdd) {
       setTasks([...tasks, newtask])
-      setAddModal(false)
-    }else{
+    } else {
       setTasks(tasks.map((task) => (task.id === newtask.id ? newtask : task)))
-      setAddModal(false)
     }
+    setAddModal(false)
   }
 
   const handleEditTask = (task) => {
@@ -32,10 +31,39 @@ export default function TaksBoard() {
     setAddModal(true)
   }
 
+  const handleCloseClick = (e) => {
+    setTaskToEdit(null)
+    setAddModal(false)
+  }
+
+  const handleDelete = (taskId) => {
+    const tasksAfterDelete = tasks.filter((task) => task.id != taskId)
+    setTasks(tasksAfterDelete)
+  }
+
+  const handleDeleteAllClick = () => {
+    tasks.length = 0
+    setTasks([...tasks])
+  }
+
+  const handleClickonFavorite = (taskId) => {
+    const updatedTasks = tasks.map((task) => {
+      if (task.id === taskId) {
+        task.isFavourite = !task.isFavourite
+      }
+      return task
+    })
+    setTasks(updatedTasks);
+  }
+
   return (
     <section className="mb-20" id="tasks">
       {showAddModal && (
-        <AddTaskModal onSave={handleAddTask} taskToEdit={taskToEdit} />
+        <AddTaskModal
+          onSave={handleAddEditTask}
+          taskToEdit={taskToEdit}
+          onCloseClick={handleCloseClick}
+        />
       )}
       <div className="container">
         <div className="flex justify-end p-2">
@@ -47,8 +75,14 @@ export default function TaksBoard() {
             onAddClick={() => {
               setAddModal(true)
             }}
+            onDeleteAllClick={handleDeleteAllClick}
           />
-          <TaskLists tasks={tasks} onEdit={handleEditTask} />
+          <TaskLists
+            tasks={tasks}
+            onEdit={handleEditTask}
+            onDelete={handleDelete}
+            clickOnFavorite={handleClickonFavorite}
+          />
         </div>
       </div>
     </section>
