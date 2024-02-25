@@ -1,7 +1,7 @@
 
 <!-- TABLE OF CONTENTS -->
 
-## ![tableOfContent][tableofcontent-shield] Table of Contents
+## Table of Contents
 
 | CODE BASE                    | CODE RUN                   | CONTACT                    |
 | ---------------------------- | -------------------------- | -------------------------- |
@@ -11,7 +11,7 @@
 
 <!-- GET HTML TEMPLATE -->
 
-## ![htmlIcon][htmlicon-shield] Get Project
+## Get Project
 
 Tasker is an intuitive task management system designed for everyone. It enables easy creation and management of tasks with features such as task creation (title, desc, tags, due date, priority, owner), task listing, powerful search with 'debounce' for an enhanced experience, task categorization (by tag, priority, owner), marking tasks as favorites, tracking and updating task status, task editing, and efficient task deletion. Simplify your task management with Tasker.
 
@@ -26,7 +26,7 @@ Tasker is an intuitive task management system designed for everyone. It enables 
 
 <!-- HOW TO RUN -->
 
-## ![rocketIcon][rocketicon-shield] How to run
+##  How to run
 
 Please follow the below instructions to run this branch in your machine:
 
