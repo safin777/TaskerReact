@@ -3,6 +3,7 @@ import SearchBox from './SearchBox'
 import TaskActions from './TaskActions'
 import TaskLists from './TaskLists'
 import AddTaskModal from './AddTaskModal'
+import NoTaskFound from './NoTaskFound'
 
 export default function TaksBoard() {
   const defaultTask = {
@@ -53,7 +54,14 @@ export default function TaksBoard() {
       }
       return task
     })
-    setTasks(updatedTasks);
+    setTasks(updatedTasks)
+  }
+
+  const handleSearch = (searchTerm) => {
+    const filteredTasks = tasks.filter((task) => {
+      return task.title.toLowerCase().includes(searchTerm.toLowerCase())
+    })
+    setTasks(...filteredTasks)
   }
 
   return (
@@ -67,7 +75,7 @@ export default function TaksBoard() {
       )}
       <div className="container">
         <div className="flex justify-end p-2">
-          <SearchBox />
+          <SearchBox getSearchTerm={handleSearch} />
         </div>
 
         <div className="rounded-xl border border-[rgba(206,206,206,0.12)] bg-[#1D212B] px-6 py-8 md:px-9 md:py-16">
@@ -77,12 +85,16 @@ export default function TaksBoard() {
             }}
             onDeleteAllClick={handleDeleteAllClick}
           />
-          <TaskLists
-            tasks={tasks}
-            onEdit={handleEditTask}
-            onDelete={handleDelete}
-            clickOnFavorite={handleClickonFavorite}
-          />
+          {tasks.length === 0 ? (
+            <NoTaskFound />
+          ) : (
+            <TaskLists
+              tasks={tasks}
+              onEdit={handleEditTask}
+              onDelete={handleDelete}
+              clickOnFavorite={handleClickonFavorite}
+            />
+          )}
         </div>
       </div>
     </section>
